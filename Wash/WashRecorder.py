@@ -1,4 +1,5 @@
 from tkinter import *
+import tkinter.font as font
 from .db_handler import DbHandler
 from . import COLORS
 import datetime
@@ -9,6 +10,7 @@ class WashRecorder(Frame):
         Frame.__init__(self, master)
         self.master = master
         self.db = DbHandler()
+        self.del_font = font.Font(size=7)
 
         self.table_area = Frame(self.master)
         self.canvas = Canvas(self.table_area, borderwidth=0,
@@ -38,7 +40,7 @@ class WashRecorder(Frame):
         self.table_area.pack()
 
         self.insert_btn = Button(self.master, text='Add wash',
-                                 command=self.insert_on_click).pack()
+                                 command=self.insert_on_click).pack(pady=5)
         # Bind scrolling
         self.table.bind("<Configure>", self.onFrameConfigure)
         self.table.bind('<Enter>', self._bound_to_mousewheel)
@@ -50,7 +52,6 @@ class WashRecorder(Frame):
 
     def insert_on_click(self):
         self.db.insert_wash()
-        print('Wash inserted.')
         self.populate_table()
 
     def clear_download_frame(self):
@@ -72,17 +73,17 @@ class WashRecorder(Frame):
         self.clear_download_frame()
 
         Label(self.table, text="Date", width=60,
-              borderwidth="1", relief="solid").grid(row=0, column=0)
+              borderwidth="1", relief="solid").grid(row=0, column=0, padx=(5, 0), pady=4)
         Label(self.table, text="Paid", width=14,
-              borderwidth="1", relief="solid").grid(row=0, column=1)
+              borderwidth="1", relief="solid").grid(row=0, column=1, pady=4)
         Label(self.table, text="Delete", width=10,
-              borderwidth="1", relief="solid").grid(row=0, column=2)
+              borderwidth="1", relief="solid").grid(row=0, column=2, pady=4)
 
         # Fetch washing history from database and add them to table
         history = self.db.get_history()
         for i, file in enumerate(history):
             Label(self.table, text=self.format_time(file[0]), width=60,
-                  borderwidth="1", relief="solid").grid(row=i+1, column=0)
+                  borderwidth="1", relief="solid").grid(row=i+1, column=0, padx=(5, 0))
 
             text = "Yes" if file[1] == 1 else "No"
             color = COLORS['green'] if file[1] == 1 else COLORS['red']
@@ -90,7 +91,7 @@ class WashRecorder(Frame):
                   borderwidth="1", relief="solid").grid(row=i+1, column=1)
 
             Button(self.table, text="Delete", command=lambda: self.delete_entry(file[0]),
-                   width=10).grid(row=i + 1, column=2)
+                   width=10, font=self.del_font).grid(row=i + 1, column=2)
 
     def onClose(self):
         self.db.save_changes()
