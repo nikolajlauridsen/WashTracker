@@ -1,6 +1,7 @@
 from tkinter import *
 import tkinter.font as font
 from .db_handler import DbHandler
+from .PayWindow import PayWindow
 from . import COLORS
 import datetime
 
@@ -39,8 +40,11 @@ class WashRecorder(Frame):
 
         self.table_area.pack()
 
-        self.insert_btn = Button(self.master, text='Add wash',
-                                 command=self.insert_on_click).pack(pady=5)
+        btn_frame = Frame(self.master)
+        Button(btn_frame, text='Add wash', command=self.insert_on_click).grid(column=0, row=0)
+        Button(btn_frame, text="Pay dues", command=self.open_pay).grid(padx=10, column=1, row=0)
+        btn_frame.pack(pady=5)
+
         # Bind scrolling
         self.table.bind("<Configure>", self.onFrameConfigure)
         self.table.bind('<Enter>', self._bound_to_mousewheel)
@@ -53,6 +57,11 @@ class WashRecorder(Frame):
     def insert_on_click(self):
         self.db.insert_wash()
         self.populate_table()
+
+    def open_pay(self):
+        window = Toplevel(master=self)
+        window.wm_title("Payment")
+        PayWindow(self.db, master=window)
 
     def clear_download_frame(self):
         """Clears file_frame"""
