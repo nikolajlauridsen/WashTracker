@@ -18,6 +18,7 @@ class WashRecorder(Frame):
                              background=COLORS['grey'],
                              width=610, height=400)
         self.table = Frame(self.canvas)
+        self.pay_window = None
 
         self.master.protocol("WM_DELETE_WINDOW", self.onClose)
         self.create_widgets()
@@ -59,9 +60,12 @@ class WashRecorder(Frame):
         self.populate_table()
 
     def open_pay(self):
-        window = Toplevel(master=self)
-        window.wm_title("Payment")
-        PayWindow(self.db, master=window)
+        if not self.pay_window or not self.pay_window.winfo_exists():
+            self.pay_window = Toplevel(master=self)
+            self.pay_window.wm_title("Payment")
+            PayWindow(self.db, master=self.pay_window)
+        else:
+            self.pay_window.lift(self.master)
 
     def clear_download_frame(self):
         """Clears file_frame"""
