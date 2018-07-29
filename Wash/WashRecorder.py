@@ -12,6 +12,7 @@ class WashRecorder(Frame):
         self.master = master
         self.db = DbHandler()
         self.del_font = font.Font(size=7)
+        self.history = list
 
         self.table_area = Frame(self.master)
         self.canvas = Canvas(self.table_area, borderwidth=0,
@@ -63,7 +64,7 @@ class WashRecorder(Frame):
         if not self.pay_window or not self.pay_window.winfo_exists():
             self.pay_window = Toplevel(master=self)
             self.pay_window.wm_title("Payment")
-            PayWindow(self.db, master=self.pay_window)
+            PayWindow(self.history, self.db, master=self.pay_window, root=self)
         else:
             self.pay_window.lift(self.master)
 
@@ -93,8 +94,9 @@ class WashRecorder(Frame):
               borderwidth="1", relief="solid").grid(row=0, column=2, pady=4)
 
         # Fetch washing history from database and add them to table
-        history = self.db.get_history()
-        for i, file in enumerate(history):
+        # TODO: fetch paid entries if requested.
+        self.history = self.db.get_history()
+        for i, file in enumerate(self.history):
             Label(self.table, text=self.format_time(file[0]), width=60,
                   borderwidth="1", relief="solid").grid(row=i+1, column=0, padx=(5, 0))
 
