@@ -34,6 +34,6 @@ class PayWindow(Frame):
         Button(self.master, text="Mark as paid", command=self.pay).pack(pady=self.small_pad//2)
 
     def pay(self):
-        # Todo: Make button logic
+        # Todo: prompt user to dissuade missclicks and allow for a receipt to be saved.
+        self.db.mark_all_as_paid()
         self.root.populate_table()
-        pass

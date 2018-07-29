@@ -30,3 +30,6 @@ class DbHandler:
 
     def remove_entry(self, timestamp):
         self.c.execute("DELETE FROM wash WHERE added == (?)", (timestamp, ))
+
+    def mark_all_as_paid(self):
+        self.c.execute("UPDATE wash SET paid=1")
