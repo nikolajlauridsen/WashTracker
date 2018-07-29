@@ -23,8 +23,11 @@ class DbHandler:
     def insert_wash(self):
         self.c.execute("INSERT INTO wash VALUES (?, ?)", (time.time(), 0))
 
-    def get_history(self):
-        self.c.execute("SELECT * FROM wash WHERE paid == 0")
+    def get_history(self, paid=False):
+        if paid:
+            self.c.execute("SELECT * FROM wash")
+        else:
+            self.c.execute("SELECT * FROM wash WHERE paid == 0")
         history = self.c.fetchall()
         return history
 

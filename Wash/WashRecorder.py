@@ -13,6 +13,7 @@ class WashRecorder(Frame):
         self.db = DbHandler()
         self.del_font = font.Font(size=7)
         self.history = list
+        self.include_paid = IntVar()
 
         self.table_area = Frame(self.master)
         self.canvas = Canvas(self.table_area, borderwidth=0,
@@ -43,8 +44,10 @@ class WashRecorder(Frame):
         self.table_area.pack()
 
         btn_frame = Frame(self.master)
-        Button(btn_frame, text='Add wash', command=self.insert_on_click).grid(column=0, row=0)
-        Button(btn_frame, text="Pay dues", command=self.open_pay).grid(padx=10, column=1, row=0)
+        Button(btn_frame, text='Add wash', command=self.insert_on_click).grid(padx=10, column=0, row=0)
+        Button(btn_frame, text="Pay dues", command=self.open_pay).grid(column=1, row=0)
+        Checkbutton(btn_frame, text='Show paid',
+                    variable=self.include_paid, command=self.populate_table).grid(column=2, row=0, padx=10)
         btn_frame.pack(pady=5)
 
         # Bind scrolling
@@ -64,7 +67,7 @@ class WashRecorder(Frame):
         if not self.pay_window or not self.pay_window.winfo_exists():
             self.pay_window = Toplevel(master=self)
             self.pay_window.wm_title("Payment")
-            PayWindow(self.history, self.db, master=self.pay_window, root=self)
+            PayWindow(self.db, master=self.pay_window, root=self)
         else:
             self.pay_window.lift(self.master)
 
@@ -94,8 +97,11 @@ class WashRecorder(Frame):
               borderwidth="1", relief="solid").grid(row=0, column=2, pady=4)
 
         # Fetch washing history from database and add them to table
-        # TODO: fetch paid entries if requested.
-        self.history = self.db.get_history()
+        if self.include_paid.get() == 1:
+            self.history = self.db.get_history(paid=True)
+        else:
+            self.history = self.db.get_history(paid=False)
+
         for i, file in enumerate(self.history):
             Label(self.table, text=self.format_time(file[0]), width=60,
                   borderwidth="1", relief="solid").grid(row=i+1, column=0, padx=(5, 0))

@@ -2,12 +2,12 @@ from tkinter import *
 
 
 class PayWindow(Frame):
-    def __init__(self, history, db, master=None, root=None):
+    def __init__(self, db, master=None, root=None):
         Frame.__init__(self, master)
         self.master = master
         self.root = root
-        self.history = history
         self.db = db
+        self.history = self.db.get_history(paid=False)
 
         self.small_pad = 10
         self.large_pad = 45
