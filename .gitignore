@@ -1,3 +1,4 @@
 *.pyc
 .idea/*
 washbase.db
+*.pdf
