@@ -3,7 +3,7 @@ import tkinter.font as font
 from .db_handler import DbHandler
 from .PayWindow import PayWindow
 from . import COLORS
-import datetime
+from . import format_time
 
 
 class WashRecorder(Frame):
@@ -55,10 +55,6 @@ class WashRecorder(Frame):
         self.table.bind('<Enter>', self._bound_to_mousewheel)
         self.table.bind('<Leave>', self._unbound_to_mousewheel)
 
-    @staticmethod
-    def format_time(time):
-        return datetime.datetime.fromtimestamp(int(time)).strftime('%d/%m/%y %H:%M')
-
     def insert_on_click(self):
         self.db.insert_wash()
         self.populate_table()
@@ -103,7 +99,7 @@ class WashRecorder(Frame):
             self.history = self.db.get_history(paid=False)
 
         for i, file in enumerate(self.history):
-            Label(self.table, text=self.format_time(file[0]), width=60,
+            Label(self.table, text=format_time(file[0]), width=60,
                   borderwidth="1", relief="solid").grid(row=i+1, column=0, padx=(5, 0))
 
             text = "Yes" if file[1] == 1 else "No"

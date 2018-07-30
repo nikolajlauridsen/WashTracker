@@ -1,4 +1,5 @@
 from tkinter import *
+from .receipt import Receipt
 
 
 class PayWindow(Frame):
@@ -31,9 +32,16 @@ class PayWindow(Frame):
                                                                               padx=self.small_pad, sticky=E)
         self.overview_frame.pack(padx=self.large_pad)
 
-        Button(self.master, text="Mark as paid", command=self.pay).pack(pady=self.small_pad//2)
+        btn_frame = Frame(self.master)
+        Button(btn_frame, text="Mark as paid", command=self.pay).grid(column=0, row=0, padx=self.small_pad//2)
+        Button(btn_frame, text="Generate receipt", command=self.save_receipt).grid(column=1, row=0, padx=self.small_pad//2)
+        btn_frame.pack(pady=self.small_pad//2)
 
     def pay(self):
         # Todo: prompt user to dissuade missclicks and allow for a receipt to be saved.
         self.db.mark_all_as_paid()
         self.root.populate_table()
+
+    def save_receipt(self):
+        receipt = Receipt(self.history)
+        receipt.save_receipt()

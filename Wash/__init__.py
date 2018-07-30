@@ -1,3 +1,5 @@
+import datetime
+
 DB_NAME = "washbase.db"
 
 COLORS = {
@@ -8,3 +10,7 @@ COLORS = {
     'd-green': '#177245',
     'grey': '#f0f0f0'
 }
+
+
+def format_time(time, t_format='%d/%m/%y %H:%M'):
+    return datetime.datetime.fromtimestamp(int(time)).strftime(t_format)

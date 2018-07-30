@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Washing receipt</title>
+</head>
+
+<body>
+    <h1>Washing receipt</h1>
+
+    <h4>Washes:</h4>
+
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Price</th>
+        </tr>
+        {% for entry in  washes%}
+        <tr>
+            <th>{{ entry.date }}</th>
+            <th>{{ entry.price }} {{ currency }}</th>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
