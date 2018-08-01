@@ -1,25 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <title>Washing receipt</title>
-</head>
+<style media="screen" type="text/css">
+
+
+tr:nth-child(even) {background-color: #f0f0f0;}
+
+.date-table{
+    text-align: left;
+    min-width: 200px;
+    padding: 5px;
+}
+
+.price-table{
+    text-align: right;
+    min-width: 75px;
+    padding: 5px;
+}
+
+.indi-row{
+    height: 30px;
+}
+</style>
 
 <body>
-    <h1>Washing receipt</h1>
+    <div>
+        <h1 style="float:left;">Washing receipt</h1>
+        <p style="float:right;">Date: {{ date }}</p>
+    </div>
+    <br style="clear: both;" />
 
-    <h4>Washes:</h4>
+    <h3>Washes:</h3>
 
     <table>
-        <tr>
+        <tr class="indi-row">
             <th>Date</th>
             <th>Price</th>
         </tr>
         {% for entry in  washes%}
         <tr>
-            <th>{{ entry.date }}</th>
-            <th>{{ entry.price }} {{ currency }}</th>
+            <td class="date-table">{{ entry.date }}</td>
+            <td class="price-table">{{ entry.price }} {{ currency }}</td>
         </tr>
         {% endfor %}
     </table>
+
+    <br>
+    <hr>
+
+    <p>Units: {{ wash_count }}</p>
+    <p>Amount paid: {{ total }} {{ currency }}</p>
 </body>

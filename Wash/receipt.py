@@ -27,6 +27,7 @@ class Receipt:
         data["wash_count"] = len(self.entries)
         data["total"] = data["wash_count"] * 10  # TODO: Fetch price from config
         data["currency"] = "kr"  # TODO: Currency as well
+        data["date"] = format_time(time.time(), t_format='%d/%m/%y')
         return data
 
     @staticmethod
