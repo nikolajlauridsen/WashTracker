@@ -12,6 +12,8 @@ class PayWindow(Frame):
 
         self.small_pad = 10
         self.large_pad = 45
+        self.quantity = StringVar()
+        self.quantity.set("10")
 
         self.overview_frame = Frame(self.master)
         self.create_widgets()
@@ -32,8 +34,15 @@ class PayWindow(Frame):
                                                                               padx=self.small_pad, sticky=E)
         self.overview_frame.pack(padx=self.large_pad)
 
+        qty_frame = Frame(self.master)
+        qtyEntry = Entry(qty_frame, textvariable=self.quantity, width=10)
+        qtyPay = Button(qty_frame, text="Pay amount", command=self.pay_amount)
+        qtyEntry.grid(column=0, row=0, padx=self.small_pad//2)
+        qtyPay.grid(column=1, row=0, padx=self.small_pad//2)
+        qty_frame.pack(pady=self.small_pad//2)
+
         btn_frame = Frame(self.master)
-        Button(btn_frame, text="Mark as paid", command=self.pay).grid(column=0, row=0, padx=self.small_pad//2)
+        Button(btn_frame, text="Mark all", command=self.pay).grid(column=0, row=0, padx=self.small_pad//2)
         Button(btn_frame, text="Generate receipt", command=self.save_receipt).grid(column=1, row=0, padx=self.small_pad//2)
         btn_frame.pack(pady=self.small_pad//2)
 
@@ -41,6 +50,11 @@ class PayWindow(Frame):
         # Todo: prompt user to dissuade missclicks and allow for a receipt to be saved.
         self.db.mark_all_as_paid()
         self.root.populate_table()
+
+    def pay_amount(self):
+        if self.quantity.get().isnumeric():
+            self.db.mark_as_paid(self.quantity.get())
+            self.root.populate_table()
 
     def save_receipt(self):
         receipt = Receipt(self.history)

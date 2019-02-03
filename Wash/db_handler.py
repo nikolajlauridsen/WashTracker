@@ -14,7 +14,6 @@ class DbHandler:
         self.c = self.conn.cursor()
         for qry in open('schema.sql', 'r').readlines():
             self.c.execute(qry)
-        print('Database set up...')
 
     def save_changes(self):
         """Commit changes to the database"""
@@ -36,3 +35,7 @@ class DbHandler:
 
     def mark_all_as_paid(self):
         self.c.execute("UPDATE wash SET paid=1")
+
+    def mark_as_paid(self, quantity):
+        self.c.execute("UPDATE wash SET paid = 1 WHERE added IN (SELECT added FROM wash WHERE paid = 0 ORDER BY added ASC LIMIT (?))",
+                       (quantity, ))
