@@ -12,7 +12,7 @@ namespace WashLib.Models
 
         public List<Wash> Washes { get; set; }
 
-        public double PaidAmount
+        public double Total
         {
             get
             {

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WashTrack", "WashTrack\Wash
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WashLib", "WashLib\WashLib.csproj", "{EE3F0F87-9DA8-471B-AA52-4E0055F5D750}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PracticalTesting", "PracticalTesting\PracticalTesting.csproj", "{6247691B-077F-4831-9B08-FF7EF2845A0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{EE3F0F87-9DA8-471B-AA52-4E0055F5D750}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE3F0F87-9DA8-471B-AA52-4E0055F5D750}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE3F0F87-9DA8-471B-AA52-4E0055F5D750}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6247691B-077F-4831-9B08-FF7EF2845A0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6247691B-077F-4831-9B08-FF7EF2845A0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6247691B-077F-4831-9B08-FF7EF2845A0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6247691B-077F-4831-9B08-FF7EF2845A0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
